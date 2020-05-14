@@ -15,7 +15,7 @@ export default class HogCard extends React.Component {
     }
 	render() {
         // console.log(this.state)
-        const className = this.state.hidden ? "hidden" : "pigTile"
+        const className = this.state.hidden ? "hidden" : "card"
 		return(
             <div className={className} onClick={this.flipCard}>
                 {this.state.isFront
@@ -30,7 +30,6 @@ export default class HogCard extends React.Component {
                 <br/>
                 <button onClick={this.hideHog}>Hide Hog</button>
             </div>
-
         )
 	}
 }
