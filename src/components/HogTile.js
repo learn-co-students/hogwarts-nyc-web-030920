@@ -5,22 +5,23 @@ import React from 'react'
 export default class HogTile extends React.Component {
 
     state = {
-        isClicked: false
+        isClicked: false,
+        isHide: false
     }
 
     renderImage = (name) => {
         let newName = name.toLowerCase().split(' ').join('_')
         let pigImage = require(`../hog-imgs/${newName}.jpg`) //how can we dynamically generate the filename?
-        return <img src={pigImage} />
+        return <img src={pigImage} onClick={this.toggleClicked} />
     }
 
     renderDetails = () => {
         return (
-            <div className='ui eight wide column' onClick={this.toggleClicked}>
-                <p>Name: {this.props.name}</p>
+            <div onClick={this.toggleClicked}>
                 <p>Specialty: {this.props.specialty}</p>
-                <p>Greased: {this.props.greased}</p>
+                <p>Greased: {this.props.greased ? 'yes' : 'no'}</p>
                 <p>Weight: {this.props.weight}</p>
+                <p>Highest medal achieved: {this.props['highest medal achieved']}</p>
             </div>
         )
     }
@@ -28,7 +29,7 @@ export default class HogTile extends React.Component {
     renderShow = () => {
         let img = this.renderImage(this.props.name)
         return (
-            <div className='ui eight wide column' onClick={this.toggleClicked}>
+            <div>
                 <h3>{this.props.name}</h3>
                 {img}
             </div>
@@ -40,12 +41,31 @@ export default class HogTile extends React.Component {
             isClicked: !this.state.isClicked
         })
     }
-    
+
+    toggleHide = () => {
+        this.setState({
+            isHide: !this.state.isHide
+        })
+    }
+
     render() {
-        return(
-            this.state.isClicked
-            ? this.renderDetails()
-            : this.renderShow()
-        )
+        if (!this.state.isHide) {
+            return (
+                <div className='ui eight wide column card'>
+                    <button onClick={this.toggleHide}>Hide this hog</button>
+                    {this.state.isClicked
+                    ? this.renderDetails()
+                    : this.renderShow()}
+                </div>
+            )
+        } else {
+            return (
+                <div className='ui eight wide column card'>
+                    <button onClick={this.toggleHide}>Reveal this hog</button>
+                </div>
+            )
+        }
+
+
     }
 }

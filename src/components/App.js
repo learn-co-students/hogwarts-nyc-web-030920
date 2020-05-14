@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../App.css";
 import Nav from "./Nav";
 import hogs from "../porkers_data";
-import HelloWorld from "./HelloWorld";
 import HogContainer from './HogContainer';
 
 class App extends Component {
@@ -10,8 +9,7 @@ class App extends Component {
   state = {
     allHogs: hogs,
     showGreased: false,
-    sortName: false,
-    sortWeight: false
+    sort: ''
   }
 
   toggleGreased = () => {
@@ -20,15 +18,9 @@ class App extends Component {
     })
   }
 
-  toggleSortName = () => {
+  handleSeletion = (event) => {
     this.setState({
-      sortName: !this.state.sortName
-    })
-  }
-
-  toggleWeight = () => {
-    this.setState({
-      sortWeight: !this.state.sortWeight
+      sort: event.target.value
     })
   }
 
@@ -45,33 +37,29 @@ class App extends Component {
       result = all;
     }
 
-    if (this.state.sortName) {
+    if (this.state.sort === 'name') {
       result.sort((a, b) => a.name > b.name ? 1 : -1)
-    }
-
-    if (this.state.sortWeight) {
+    }else if (this.state.sort === 'weight') {
       result.sort((a, b) => a.weight > b.weight ? 1 : -1)
     }
-    
+
     return result
   }
 
   render() {
-    console.log('app state: ', this.state)
     let filtered = this.filterHogs()
-    
+   
     return (
       <div className="App">
         <Nav />
-        <button onClick={this.toggleGreased}>Show greased</button>
-        <button onClick={this.toggleSortName}>Sort by name</button>
-        <button onClick={this.toggleWeight}>Sort by weight</button>
-        <HelloWorld />
-        {this.state.showGreased || this.state.sortName || this.state.sortWeight 
-        ? <HogContainer allHogs={filtered}/>
-        :<HogContainer allHogs={this.state.allHogs}/>
-        }
-        
+        <button onClick={this.toggleGreased}>{this.state.showGreased ? 'greased hogs':'all hogs'}</button>
+        <select onChange={this.handleSeletion}>
+          <option value='' >none</option>
+          <option value='name' >name</option>
+          <option value='weight'>weight</option>
+        </select>
+        <br/><br/><br/>
+        <HogContainer allHogs={filtered}/>
       </div>
     );
   }
