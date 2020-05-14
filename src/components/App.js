@@ -32,11 +32,33 @@ class App extends Component {
     })
   }
 
+  filterHogs = () => {
+    let result = []
+    let all = [...this.state.allHogs]
+    if (this.state.showGreased) {
+      for (let i = 0; i < all.length; i++) {
+        if (all[i].greased) {
+          result.push(all[i])
+        }
+      }
+    } else {
+      result = all;
+    }
+
+    if (this.state.sortName) {
+      result.sort((a, b) => a.name > b.name ? 1 : -1)
+    }
+
+    if (this.state.sortWeight) {
+      result.sort((a, b) => a.weight > b.weight ? 1 : -1)
+    }
+    
+    return result
+  }
+
   render() {
     console.log('app state: ', this.state)
-    let allHog = [...this.state.allHogs]
-
-    
+    let filtered = this.filterHogs()
     
     return (
       <div className="App">
@@ -45,7 +67,11 @@ class App extends Component {
         <button onClick={this.toggleSortName}>Sort by name</button>
         <button onClick={this.toggleWeight}>Sort by weight</button>
         <HelloWorld />
-        <HogContainer allHogs={this.state.allHogs}/>
+        {this.state.showGreased || this.state.sortName || this.state.sortWeight 
+        ? <HogContainer allHogs={filtered}/>
+        :<HogContainer allHogs={this.state.allHogs}/>
+        }
+        
       </div>
     );
   }

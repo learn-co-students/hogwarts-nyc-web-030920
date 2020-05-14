@@ -49,11 +49,3 @@ export default class HogTile extends React.Component {
         )
     }
 }
-
-
-
-
-// render(){
-//     let pigImage = require('../hog-imgs/piggy_smalls.jpg') //how can we dynamically generate the filename?
-//     return <img src={pigImage} />
-//   }
