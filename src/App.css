@@ -85,6 +85,10 @@ ul {
   opacity: 1;
 }
 
+.hidden {
+  display: none;
+}
+
 .minBackgroundSneak {
   position: absolute;
   width: inherit;
