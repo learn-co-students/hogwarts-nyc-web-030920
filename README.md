@@ -29,6 +29,13 @@
 
 ## Trying to figure out where to start?
 
+App ---State Will be here to know which sorted or unsorted pigs to send to PigContainer
+ |
+ |---NavBar
+ |
+ |----PigContainer ---iterate through pigs and send pig object to PigTile 
+          |
+          |====PigTile
 There are lots of ways to build this project, and while some ways are better than others, there is no 'right' way! Start by thinking about which components you'll be building and whether they'll be presentational or container components.
 
 Once you've decided on your components, use the MVP approach. What's the simplest thing we can render to the page? Perhaps a paragraph tag displaying each hog's name? Which components would this involve?
