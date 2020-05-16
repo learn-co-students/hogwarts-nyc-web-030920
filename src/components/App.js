@@ -9,7 +9,8 @@ class App extends Component {
   
   state = {
     isGreased: false,
-    copiedPigs: [...hogs]
+    copiedPigs: [...hogs],
+    sortValue: ''
   }
 
   greasedStatus = () =>  {
@@ -19,17 +20,43 @@ class App extends Component {
     })
   }
 
-  greasedPigsOnly = () => {
-    this.state.copiedPigs.filter(pig => pig.greased)
+  sortedStatus = (event) => {
+    console.log(this.state.sortValue)
+    this.setState({
+      sortValue: event.target.value
+    }, this.sortPigs)
   }
-  
-  
+
+  sortPigs = () => {
+    let pigsArray = [...this.state.copiedPigs]
+    if(this.state.sortValue === 'name'){
+      pigsArray.sort((a, b) => (a.name > b.name) ? 1 : -1)
+    } else if(this.state.sortValue === 'weight'){
+      pigsArray.sort((a, b) => (a.weight > b.weight) ? 1 : -1)
+    } else {
+      pigsArray = [...hogs]
+    }
+    this.setState({
+      copiedPigs: pigsArray
+    })
+  }
+
+
   render() {
+
+    const greasedPigs = this.state.copiedPigs.filter(pig => {
+      return pig.greased === true
+    })
+
     return (
       <div className="App">
         <Nav />
-        <Filter isGreased={this.state.isGreased} greasedStatus={this.greasedStatus} />
-        <PigContainer pigs={hogs} />
+        <Filter 
+          isGreased={this.state.isGreased} 
+          greasedStatus={this.greasedStatus}
+          sortedStatus={this.sortedStatus}  
+        />
+        <PigContainer pigs={this.state.isGreased ? greasedPigs : this.state.copiedPigs} />
       </div>
     );
   }
