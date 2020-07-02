@@ -30,9 +30,10 @@ class PigTile extends React.Component {
     }
     
     render() { 
+        const {name} = this.props.pig
         return ( 
             <div className="ui eight wide column">
-                <h3>{this.props.pig.name}</h3>
+                <h3>{name}</h3>
                 {this.renderImage()}
                 {this.state.isClicked ? this.renderDetails() : ''}
                 <div className="ui bottom attached button" onClick={this.handleClick}>Pig Details</div>
